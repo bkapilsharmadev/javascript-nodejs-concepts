@@ -13,22 +13,24 @@ class MyPromise {
         this.#state = STATE.PENDING;
         this.#value = undefined;
 
-        const resolve = (value) => {
-            this.#state = STATE.FULFILLED;
-            this.#value = value;
-        }
-
-        const reject = (reason) => {
-            this.#state = STATE.REJECTED;
-            this.#value = reason;
-        }
-
         try {
-            executor(resolve, reject)
-        } catch(err) {
+            executor(this.resolve, this.reject)
+        } catch (err) {
             throw new Error(err)
         }
     }
+
+    resolve = (value) => {
+        console.log('resolve this>>> ', this);
+        this.#state = STATE.FULFILLED;
+        this.#value = value;
+    }
+
+    reject = (reason) => {
+        this.#state = STATE.REJECTED;
+        this.#value = reason;
+    } 
+
 
     get state() {
         return this.#state;
@@ -38,9 +40,9 @@ class MyPromise {
         return this.#value;
     }
 
-    
+
 }
 
-module.exports = MyPromise;
+export default MyPromise;
 
 

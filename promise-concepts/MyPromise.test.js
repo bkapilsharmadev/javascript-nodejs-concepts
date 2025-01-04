@@ -1,4 +1,4 @@
-const MyPromise =  require('./MyPromise.js');
+import MyPromise from "./MyPromise.js";
 
 
 describe('MyPromise: Resolve and Reject', () => {
