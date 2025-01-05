@@ -24,7 +24,7 @@ export default class MyEventEmitter {
     }
 
     once(eventName, cb) {
-        const listeners = this.#events[eventName] || [];
+        const listeners = this.#events[eventName] ?? [];
 
         const exists = listeners.some(listener => listener.original === cb);
         if (exists) return;
@@ -44,5 +44,9 @@ export default class MyEventEmitter {
         if (listeners) {
             this.#events = listeners.filter(listener => listener != cb);
         }
+    }
+
+    listeners(eventName) {
+        return this.#events[eventName] ?? [];
     }
 }
