@@ -39,4 +39,16 @@ describe('MyEventEmitter', () => {
         expect(returnedValue).toBe(50);
     })
 
+    test(`should invoke an 'once' listner only once`, () => {
+        const mockFn = jest.fn();
+
+        emitter.once('testEvent', mockFn);
+        emitter.once('testEvent', mockFn);
+
+        emitter.emit('testEvent');
+        emitter.emit('testEvent');
+
+        expect(mockFn).toHaveBeenCalledTimes(1);
+    })
+
 })
