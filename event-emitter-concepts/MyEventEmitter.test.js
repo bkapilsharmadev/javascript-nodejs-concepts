@@ -1,17 +1,42 @@
-import { beforeEach } from 'jest-circus';
 import MyEventEmitter from './MyEventEmitter.js';
 
+import { jest } from '@jest/globals';
+
+
 describe('MyEventEmitter', () => {
-    let emitter = null;
+    let emitter;
 
     beforeEach(() => {
         emitter = new MyEventEmitter();
-    })
+    });
 
     test('should register and emit an event', () => {
-        const mockFn = jest.fn();
-        emitter.on('testEvent', mockFn);
+        const mockFn1 = jest.fn();
+        const mockFn2 = jest.fn();
+
+        emitter.on('testEvent', mockFn1);
+        emitter.on('testEvent', mockFn2);
+        emitter.on('testEvent', mockFn2);
+
         emitter.emit('testEvent');
-        expect(mockFn).toHaveBeenCalledTimes(1);
+        expect(mockFn1).toHaveBeenCalledTimes(1);
+        expect(mockFn2).toHaveBeenCalledTimes(2);
     })
+
+    test('should pass argument to the event all listeners', () => {
+        const mockFn1 = jest.fn();
+        const mockFn2 = jest.fn((number) => number + 10);
+
+        emitter.on('testEvent', mockFn1);
+        emitter.emit('testEvent', 'Hello', 'World');
+        expect(mockFn1).toBeCalledWith('Hello', 'World');
+
+        emitter.on('add10', mockFn2);
+        emitter.emit('add10', 40);
+        expect(mockFn2).toBeCalledWith(40);
+
+        const returnedValue = mockFn2.mock.results[0].value;
+        expect(returnedValue).toBe(50);
+    })
+
 })
