@@ -1,14 +1,11 @@
-import MyDebouncer from './debouncing-concepts/MyDebouncer.js';
+import MyPromise from "./promise-concepts/MyPromise.js";
 
-// Create an instance of the debouncer
-const debouncer = new MyDebouncer();
+const myPromise = new MyPromise(resolve => {
+    resolve('RESOLVED VALUE');
+})
 
-// Create a debounced function ONCE
-const logMessage = debouncer.debounce((message) => {
-    console.log(message);
-}, 400);
-
-// Simulate rapid calls
-logMessage('First call'); // Ignored
-logMessage('Second call'); // Should be ignored
-setTimeout(() => logMessage('Final call'), 500); // Executes after 600ms
+console.log(myPromise);
+myPromise.then(value => {
+    console.log('Executing then')
+    console.log("KAPIL>>> ", value);
+})

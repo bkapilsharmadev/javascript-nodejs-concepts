@@ -1,17 +1,12 @@
 export default class MyDebouncer {
-    #timer;
-
-    constructor() {
-        this.#timer = null;
-    }
-
-    debounce = (cb, delay) => {
+    debounce (cb, delay) {
+        let timer = null;
         return (...args) => {
             // Clear the previous timer
-            clearTimeout(this.#timer);
+            clearTimeout(timer);
 
             // Set a new timer
-            this.#timer = setTimeout(() => {
+            timer = setTimeout(() => {
                 cb(...args); // Execute the callback with provided arguments
             }, delay);
         };
