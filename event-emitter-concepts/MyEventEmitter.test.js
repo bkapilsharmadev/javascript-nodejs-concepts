@@ -76,6 +76,20 @@ describe('MyEventEmitter', () => {
         expect(listeners).toContain(mockFn2);
         expect(listeners.length).toBe(2);
     })
+
+    test(`should not throw error when emitting an event with no listeners`, () => {
+        expect(() => {
+            emitter.emit('noListenerEvent')
+        }).not.toThrow();
+    })
+
+    test(`should not throw error when removing a non existing listener`, () => {
+        expect(() => {
+            emitter.off('noListenerEvent')
+        }).not.toThrow();
+    })
+
+
 })
 
 
